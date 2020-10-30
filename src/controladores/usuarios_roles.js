@@ -18,7 +18,7 @@ module.exports = {
             //verificamos que la relacion usuarios_roles no se repitan
             const usuarioRolExiste = await pool.query('SELECT idusuario, idroles FROM usuarios_roles WHERE idusuario=? and idroles=?', [idusuario, idroles])
             if (usuarioRolExiste.length)
-                return res.status(400).send({ Message: 'Ya existe; no se admite duplicaión' })
+                return res.status(400).send({ Message: 'Ya existe, no se admite duplicados' })
             const fecha = Date.now();
             const newUsuario_rol = {
                 idusuario,
@@ -27,7 +27,7 @@ module.exports = {
             };
             //Insertamos los datos del nuevo usuario en la bd
             await pool.query('INSERT INTO usuarios_roles set ?', [newUsuario_rol]);
-            res.status(201).send({ Message: 'Se asignó correctamente un rol a un usuario' });
+            res.status(201).send({ Message: 'Se asignó correctamente un rol a un usuario', result:newUsuario_rol });
         } catch (error) {
             console.error(error);
         }

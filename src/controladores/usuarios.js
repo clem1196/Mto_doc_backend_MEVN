@@ -18,7 +18,7 @@ module.exports = {
             const newUsuario = { nombre_usuario, contraseña: hash, registrado: new Date(fecha) };
             // Agregamos los datos el usuario y contraseña encriptado a la bd
             const insertarUsuario = await pool.query('INSERT INTO usuarios SET ?', [newUsuario]);
-            return res.status(401).send({ Message: 'se creó correctamente!', user: insertarUsuario });
+            return res.status(201).send({ Message: 'se creó correctamente!', user: insertarUsuario });
 
         } catch (error) {
             console.error(error)

@@ -51,9 +51,15 @@ module.exports = {
         };
         try {
             const consultarRoles = await pool.query('SELECT * FROM roles WHERE roles.idroles=?', [id]);
+            const consultarNombreRol = await pool.query('SELECT * FROM roles WHERE roles.nombre_rol=?', [nombre_rol]);
             if (consultarRoles.length > 0) {
-                await pool.query('UPDATE roles set? WHERE roles.idroles=?', [newRol, id]);
-                return res.status(201).send({ Message: 'Rol actualizado correctamente' });
+                if (consultarNombreRol.length > 0) {
+                    return res.status(409).send({ Message: 'El rol ya xiste' });
+                } else {
+                    await pool.query('UPDATE roles set? WHERE roles.idroles=?', [newRol, id]);
+                    res.status(201).send({ Message: 'Rol actualizado correctamente' });
+                }
+
             }
             res.status(404).send({ Message: 'El rol no existe o fue eliminado' });
         } catch (error) {

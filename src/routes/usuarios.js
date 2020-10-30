@@ -6,8 +6,8 @@ const usuarioControlador = require('../controladores/usuarios')
 
 //Registro de un nuevo usuario
 router.post('/registro',
-    //usuarioMiddleware.isLoggedIn,
-    //usuarioMiddleware.isAdministrador, 
+    usuarioMiddleware.isLoggedIn,
+    usuarioMiddleware.isAdministrador, 
     usuarioMiddleware.validarRegistro,
     usuarioControlador.Registro
 );
