@@ -6,8 +6,8 @@ const usuarioMiddleware = require('../middlewares/middlewares');
 
 //Crear o asignar Rol a un usuario
 router.post('/u_roles/crear',
-    //usuarioMiddleware.isLoggedIn,
-    //usuarioMiddleware.isAdministrador,  
+    usuarioMiddleware.isLoggedIn,
+    usuarioMiddleware.isAdministrador,  
     usuarioMiddleware.validarUsuario_rol,
     controladorU_roles.crearUsuarios_roles
 );

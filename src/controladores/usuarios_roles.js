@@ -36,7 +36,11 @@ module.exports = {
     listarUsuarios_roles: async (req, res) => {
         try {
             //Listamos usuarios
-            const usuarioRoles = await pool.query('SELECT *FROM usuarios_roles');
+            const usuarioRoles = await pool.query(
+            `select idusuarios_roles, nombre_usuario, nombre_rol, usuarios_roles.registrado, usuarios_roles.actualizado
+            from usuarios, roles, usuarios_roles
+            where usuarios.idusuario=usuarios_roles.idusuario 
+            and usuarios_roles.idroles=roles.idroles;`);
             if (usuarioRoles.length > 0)
                 return res.status(200).send({ usuario_rol: usuarioRoles });
             res.status(404).send({ Message: 'No hay usuarios con roles que mostrar' });
