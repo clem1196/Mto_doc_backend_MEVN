@@ -6,8 +6,8 @@ const usuarioMiddleware = require('../middlewares/middlewares');
 
 //Crear roles
 router.post('/roles/crear',
-    //usuarioMiddleware.isLoggedIn, 
-    //usuarioMiddleware.isAdministrador, 
+    usuarioMiddleware.isLoggedIn, 
+    usuarioMiddleware.isAdministrador, 
     usuarioMiddleware.validarRoles,
     controladorRoles.crearRol
 );

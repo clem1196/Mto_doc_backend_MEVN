@@ -17,7 +17,7 @@ router.post('/ingreso',
 );
 
 
-//Gestion de usuarios: solo pueden gestionar los usuarios autenticados
+//Gestion de usuarios: solo pueden gestionar los usuarios autenticados y autorizados
 
 //Listar usuarios
 router.get('/usuarios',
