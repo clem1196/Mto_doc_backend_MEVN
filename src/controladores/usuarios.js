@@ -1,4 +1,3 @@
-//src/controladores/usuarios.js
 const bcrypt = require('bcryptjs');
 const pool = require('../base_datos.js');
 const jwt = require('jsonwebtoken');

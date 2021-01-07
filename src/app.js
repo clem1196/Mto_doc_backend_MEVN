@@ -16,7 +16,8 @@ app.use('/api', (
         require('./routes/inicio'),
         require('./routes/usuarios'),
         require('./routes/roles'),
-        require('./routes/usuarios_roles')
+        require('./routes/usuarios_roles'),
+        require('./routes/documentos')
     ]
 ));
 
