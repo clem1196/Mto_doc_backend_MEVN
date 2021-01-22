@@ -7,7 +7,7 @@ const documentosControlador = require('../controladores/documentos')
 //Registro de un nuevo documento
 router.post('/documentos',
     documentosMiddleware.isLoggedIn,
-    documentosMiddleware.isAdministrador,
+    documentosMiddleware.isEmpleado,
     documentosMiddleware.validarDoc,
     documentosControlador.crearDoc
 );
@@ -26,16 +26,17 @@ router.get('/documentos/:id',
     documentosMiddleware.isEmpleado,
     documentosControlador.obtenerUnDoc
 );
+
 //Editar un documento
 router.put('/documentos/:id',
     documentosMiddleware.isLoggedIn,
-    documentosMiddleware.isAdministrador,
+    documentosMiddleware.isEmpleado,
     documentosControlador.editarDoc
 );
 //Eliminar un documento
 router.delete('/documentos/:id',
     documentosMiddleware.isLoggedIn,
-    documentosMiddleware.isAdministrador,
+    documentosMiddleware.isEmpleado,
     documentosControlador.eliminarDoc
 );
 

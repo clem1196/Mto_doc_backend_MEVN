@@ -45,6 +45,7 @@ module.exports = {
             console.error(error);
         }
     },
+    
     //Editar un documento
     editarDoc: async (req, res) => {
         const { id } = req.params;
