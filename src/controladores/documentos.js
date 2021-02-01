@@ -3,8 +3,12 @@ const pool = require('../base_datos.js');
 module.exports = {
     //Registro de documentos
     crearDoc: async (req, res) => {
-        const { idusuario, tipo_doc, doc, estado } = req.body;
+        const { idusuario, tipo_doc, doc, estado, file} = req.body;
         try {
+            const getDoc = await pool.query('select doc from docs where docs.doc=?', [doc]);
+            if (getDoc.length > 0) {
+                return res.status(409).send({Message:'El documento ya existe'});
+            }
             // Agregamos los datos el usuario y contraseña encriptado a la bd
             const fecha = Date.now()
             const newDoc = {
@@ -12,8 +16,10 @@ module.exports = {
                 tipo_doc,
                 doc,
                 estado,
+                file,
                 f_created: new Date(fecha)
-            }
+            } 
+                  
             const insertarDoc = await pool.query('INSERT INTO docs SET ?', [newDoc]);
             return res.status(201).send({ Message: 'se creó correctamente!', doc: insertarDoc });
 
@@ -45,7 +51,7 @@ module.exports = {
             console.error(error);
         }
     },
-    
+
     //Editar un documento
     editarDoc: async (req, res) => {
         const { id } = req.params;
