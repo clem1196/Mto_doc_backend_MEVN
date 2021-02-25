@@ -6,17 +6,13 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 global.__basedir = __dirname;
-var corsOptions = {
-  origin: "http://localhost:8081"
-};
 
-app.use(express.urlencoded({ extended: true }));
-
+//app.use(express.urlencoded({ extended: true }));
 // Configurar puerto
 const PORT = process.env.PORT || 4000;
 //middlewares
 app.use(bodyParser.json());
-app.use(cors(corsOptions));
+app.use(cors());
 //Agregar rutas
 app.use('/api', (
     [

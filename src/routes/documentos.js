@@ -8,7 +8,7 @@ const documentosControlador = require('../controladores/documentos')
 router.post('/documentos',
     documentosMiddleware.isLoggedIn,
     documentosMiddleware.isEmpleado,
-    documentosMiddleware.validarDoc,
+    //documentosMiddleware.validarDoc,
     documentosControlador.crearDoc
 );
 

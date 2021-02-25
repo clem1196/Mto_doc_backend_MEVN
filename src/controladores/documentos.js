@@ -3,7 +3,7 @@ const pool = require('../base_datos.js');
 module.exports = {
     //Registro de documentos
     crearDoc: async (req, res) => {
-        const { idusuario, tipo_doc, doc, estado, file} = req.body;
+        const { idusuario, tipo_doc, doc, estado, file_doc } = req.body;
         try {
             const getDoc = await pool.query('select doc from docs where docs.doc=?', [doc]);
             if (getDoc.length > 0) {
@@ -16,10 +16,9 @@ module.exports = {
                 tipo_doc,
                 doc,
                 estado,
-                file,
+                file_doc,
                 f_created: new Date(fecha)
-            } 
-                  
+            }            
             const insertarDoc = await pool.query('INSERT INTO docs SET ?', [newDoc]);
             return res.status(201).send({ Message: 'se creó correctamente!', doc: insertarDoc });
 

@@ -1,35 +1,31 @@
 const express = require("express");
 const router = express.Router();
-const docMiddleware = require('../middlewares/middlewares')
-const controladorDoc = require("../controladores/file");
-//Crear roles
-router.post('/upload',
-    docMiddleware.isLoggedIn,    
-    //docMiddleware.validarRoles,
-    controladorDoc.upload
+const fileMiddleware = require('../middlewares/middlewares')
+const controladorFile = require("../controladores/file");
+
+//upload multiple files
+router.post('/uploads',
+    fileMiddleware.isLoggedIn,
+    fileMiddleware.isEmpleado,
+    controladorFile.uploads
 );
-//Listar roles
+//Listar files
 router.get('/files',
-    docMiddleware.isLoggedIn,
-    docMiddleware.isEmpleado,
-    controladorDoc.getListFiles
+    fileMiddleware.isLoggedIn,
+    fileMiddleware.isEmpleado,
+    controladorFile.getListFiles
 );
-//Obtener un rol
-router.get('/files/:name',
-    docMiddleware.isLoggedIn,
-    docMiddleware.isEmpleado,
-    controladorDoc.download
+//Obtener one file
+router.get('/file/:name',
+    //fileMiddleware.isLoggedIn,
+    //fileMiddleware.isEmpleado,
+    controladorFile.descargar
+);
+//Eliminar multiples files
+router.delete('/files/:name',
+    fileMiddleware.isLoggedIn,
+    fileMiddleware.isEmpleado,
+    controladorFile.deleteFile
 );
 
 module.exports = router;
-
-
-/*let routes = (app) => {
-  router.post("/upload", controller.upload);
-  router.get("/files", controller.getListFiles);
-  router.get("/files/:name", controller.download);
-
-  app.use(router);
-};
-
-module.exports = routes;*/

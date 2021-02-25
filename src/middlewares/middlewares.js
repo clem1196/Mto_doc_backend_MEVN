@@ -3,10 +3,7 @@ const jwt = require('jsonwebtoken');
 
 module.exports = {
     validarDoc: (req, res, next) => {
-        // tipo_doc min length 3
-        if (!req.body.tipo_doc || req.body.tipo_doc.length < 3) {
-            return res.status(400).send({ Message: 'Por favor ingresa tipo de documento, minimo 3 caracteres.' });
-        }
+        
         // número_doc min 6 chars
         if (!req.body.doc || req.body.doc.length < 3) {
             return res.status(400).send({ Message: 'Por favor ingrese el número de documento, minimo 6 caracteres' });

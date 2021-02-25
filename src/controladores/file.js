@@ -1,64 +1,69 @@
-const uploadFile = require("../middlewares/upload");
+//const uploadFile = require("../middlewares/upload");
+const uploadFiles = require("../middlewares/upload");
 const fs = require("fs");
+const { report } = require("process");
 
-const upload = async (req, res) => {
+const uploads = async (req, res) => {
   try {
-    await uploadFile(req, res);
-    const File = req.file;
-    if (File == undefined) {
-      return res.status(400).send({ message: "Please upload a file!" });
+    await uploadFiles(req, res);   
+    let Files=req.files
+    console.log(req.files)
+    if (Files == undefined || !Files.length) {
+      return res.status(400).send({ message: "Please upload a files!" });
+    } else {
+      res.status(200).send({ Message: 'successfull', files: Files })
     }
-    const ext = File.originalname.split('\.')[1];
-    console.log(ext)
-    if (ext === 'png' || ext === 'jpg' || ext === 'jpeg' || ext === 'pdf') {
-      return res.status(200).send({
-        message: "Uploaded the file successfully: ", file: req.file
-      });
-    }
-    res.status(500).send({ Message: 'solo se acepta archivos con extension pdf, png, jpg y jpeg' })
-
   } catch (err) {
     res.status(500).send({
-      message: `Could not upload the file: ${req.file.originalname}.${err}`,
+      error: 'Seleccione al menos un archivo, Solo se admiten extensión pdf, jpg y jpeg',
     });
   }
 };
 
 const getListFiles = (req, res) => {
   const directoryPath = __basedir + "/resources/uploads";
-  const baseUrl=`http://${req.headers.host}/api/files/`
+  const baseUrl = `http://${req.headers.host}/api/file/`
 
   fs.readdir(directoryPath, function (err, files) {
     if (err) {
       res.status(500).send({ message: "Unable to scan files!" });
-      
+
     }
     let fileInfos = [];
     files.forEach((file) => {
       fileInfos.push({
         name: file,
-        url:baseUrl + file,
+        url: baseUrl + file,
       });
-    });   
+    });
+
     res.status(200).send(fileInfos);
   });
 };
-
-const download = (req, res) => {
-  const fileName = req.params.name;
-  const directoryPath = __basedir + "/resources/uploads/";
-
-  res.download(directoryPath + fileName, fileName, (err) => {
-    if (err) {
-      res.status(500).send({
-        message: "Could not download the file. " + err,
-      });
-    }
+const descargar = (req, res) => {
+  let fileName = req.params.name;
+  let directoryPath = __basedir + "/resources/uploads/" + fileName;
+  //console.log({ name: fileName, url: directoryPath })
+  res.download(directoryPath, directoryPath, (err) => {
+    if (err)
+      res.status(500).send('El archivo no existe o fue eliminado');
   });
 };
 
-module.exports = {
-  upload,
+const deleteFile = (req, res) => {
+  const fileName = req.params.name;
+  const directoryPath = __basedir + "/resources/uploads/";
+  fs.unlink(directoryPath + fileName, (err) => {
+    if (err) {
+      return res.status(500).send({ message: "Could not download the file. " + err });
+    } else {
+      res.status(200).send({ Message: 'Eliminado' })
+    }
+  });
+};
+module.exports = {  
+  uploads,
   getListFiles,
-  download,
+  descargar,
+  deleteFile
 };
