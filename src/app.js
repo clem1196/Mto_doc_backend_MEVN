@@ -7,7 +7,7 @@ const cors = require('cors');
 
 global.__basedir = __dirname;
 
-//app.use(express.urlencoded({ extended: true }));
+//app.use(bodyParser.urlencoded({ extended: true }));
 // Configurar puerto
 const PORT = process.env.PORT || 4000;
 //middlewares

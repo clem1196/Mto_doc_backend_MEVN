@@ -38,8 +38,7 @@ module.exports = {
                 const consulta = `SELECT nombre_rol FROM usuarios 
                 inner join usuarios_roles on usuarios.idusuario=usuarios_roles.idusuario                                                               
                 inner join roles on usuarios_roles.idroles=roles.idroles 
-                WHERE nombre_usuario=?`;
-                //const nombre
+                WHERE nombre_usuario=?`;             
 
                 const verificarRol = await pool.query(consulta, [consultarUsuario[0].nombre_usuario]);
                 if (verificarRol.length > 0) {
