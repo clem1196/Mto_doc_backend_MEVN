@@ -40,8 +40,9 @@ const getListFiles = (req, res) => {
 };
 const descargar = (req, res) => {
   let fileName = req.params.name;
-  let directoryPath ="D:\\Doc_registro\\uploads"  /*__basedir + "/resources/uploads/"*/ + fileName;  
-  res.download(directoryPath, directoryPath, (err) => {
+  //console.log(fileName) 
+  let directoryPath ="D:\\Doc_registro\\uploads/"  /*__basedir + "/resources/uploads/"*/ + fileName;  
+  res.download(directoryPath, fileName, (err) => {
     if (err)
       res.status(500).send('El archivo no existe o fue eliminado');
   });

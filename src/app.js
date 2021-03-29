@@ -2,6 +2,7 @@
 // src/app.js
 const express = require('express');
 const app = express();
+//import bodyParser from "body-parser"
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
