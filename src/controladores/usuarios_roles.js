@@ -27,7 +27,7 @@ module.exports = {
             };
             //Insertamos los datos del nuevo usuario en la bd
             await pool.query('INSERT INTO usuarios_roles set ?', [newUsuario_rol]);
-            res.status(201).send({ Message: 'Se asignó correctamente un rol a un usuario', result:newUsuario_rol });
+            res.status(201).send({ Message: 'Se asignó correctamente un rol a un usuario'});
         } catch (error) {
             console.error(error);
         }
